@@ -7,6 +7,11 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
+anthropic = "^0.39.0"
+python-dotenv = "^1.0.1"
+loguru = "^0.7.2"
+pyautogui = "^0.9.54"
+pillow = "^11.0.0"
 
 
 [build-system]

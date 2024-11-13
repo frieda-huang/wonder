@@ -46,41 +46,41 @@ const preferencesFormSchema = z.object({
     },
   ),
   roles: z.array(z.string()).min(0),
-  question: z.string({
+  aspirations: z.string({
     required_error: "Tell us about your aspirations.",
   }),
 });
 
 const locations = [
-  { label: "San Francisco", value: "sf" },
-  { label: "Silicon Valley", value: "sv" },
-  { label: "New York City", value: "nyc" },
-  { label: "Austin", value: "austin" },
+  { label: "San Francisco", value: "San Francisco" },
+  { label: "Silicon Valley", value: "Silicon Valley" },
+  { label: "New York City", value: "New York City" },
+  { label: "Austin", value: "Austin" },
 ] as const;
 
 const roles = [
   {
-    id: "ai-ml",
+    id: "AI & Machine Learning",
     label: "AI & Machine Learning",
   },
   {
-    id: "full-stack",
+    id: "Full Stack",
     label: "Full Stack",
   },
   {
-    id: "backend",
+    id: "Backend",
     label: "Backend",
   },
   {
-    id: "frontend",
+    id: "Frontend",
     label: "Frontend",
   },
   {
-    id: "data-science",
+    id: "Data Science",
     label: "Data Science",
   },
   {
-    id: "system-infra",
+    id: "System & Infrastructure",
     label: "System & Infrastructure",
   },
 ] as const;
@@ -90,7 +90,7 @@ const defaultValues: Partial<AccountFormValues> = {
   location: "",
   resume: undefined,
   roles: [],
-  question: "",
+  aspirations: "",
 };
 
 export default function Page() {
@@ -100,6 +100,7 @@ export default function Page() {
   });
 
   function onSubmit(data: AccountFormValues) {
+    console.log(data);
     toast({
       title: "You submitted the following values:",
       description: (
@@ -248,7 +249,7 @@ export default function Page() {
             {/* What are you looking for in your next position? */}
             <FormField
               control={form.control}
-              name="question"
+              name="aspirations"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-base">

@@ -1,29 +1,11 @@
 "use client";
 
-import { z } from "zod";
-import { useForm } from "react-hook-form";
 import { Check, ChevronsUpDown } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import { cn } from "@/lib/utils";
-import { toast } from "@/hooks/use-toast";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import {
   Command,
   CommandEmpty,
@@ -32,6 +14,25 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { filesize } from "filesize";
 
 type AccountFormValues = z.infer<typeof preferencesFormSchema>;
 
@@ -100,12 +101,29 @@ export default function Page() {
   });
 
   function onSubmit(data: AccountFormValues) {
-    console.log(data);
+    const formData = {
+      ...data,
+      resume: data.resume && {
+        name: data.resume.name,
+        size: filesize(data.resume.size),
+        lastModified: new Date(data.resume.lastModified).toLocaleDateString(
+          "en-US",
+          {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          },
+        ),
+      },
+    };
+
     toast({
       title: "You submitted the following values:",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          <code className="text-white">
+            {JSON.stringify(formData, null, 2)}
+          </code>
         </pre>
       ),
     });

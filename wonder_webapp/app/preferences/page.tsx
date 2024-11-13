@@ -39,7 +39,12 @@ const preferencesFormSchema = z.object({
   location: z.string({
     required_error: "Please select a role.",
   }),
-  resume: z.instanceof(File).optional(),
+  resume: z.instanceof(File).refine(
+    (file) => file.size < 7 * 1024 * 1024, // 7MB in bytes
+    {
+      message: "Your resume must be less than 7MB",
+    },
+  ),
   roles: z.array(z.string()).min(0),
   question: z.string({
     required_error: "Tell us about your aspirations.",
@@ -93,8 +98,6 @@ export default function Page() {
     resolver: zodResolver(preferencesFormSchema),
     defaultValues,
   });
-
-  const fileRef = form.register("resume");
 
   function onSubmit(data: AccountFormValues) {
     toast({
@@ -178,11 +181,18 @@ export default function Page() {
             <FormField
               control={form.control}
               name="resume"
-              render={({ field }) => (
+              render={({ field: { value, onChange, ...fieldProps } }) => (
                 <FormItem className="grid w-full items-center gap-1.5">
                   <FormLabel className="text-base">Resume</FormLabel>
                   <FormControl>
-                    <Input id="resume" type="file" {...fileRef} />
+                    <Input
+                      {...fieldProps}
+                      type="file"
+                      accept="application/pdf"
+                      onChange={(event) =>
+                        onChange(event.target.files && event.target.files[0])
+                      }
+                    />
                   </FormControl>
                 </FormItem>
               )}

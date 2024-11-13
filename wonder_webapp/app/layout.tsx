@@ -2,6 +2,8 @@ import { Metadata } from "next";
 
 import localFont from "next/font/local";
 
+import { Toaster } from "@/components/ui/toaster";
+
 import { BreadcrumbWithCustomSeparator } from "./breadcrumb";
 
 import "./globals.css";
@@ -33,6 +35,7 @@ export default function RootLayout({
       >
         <BreadcrumbWithCustomSeparator />
         {children}
+        <Toaster />
       </body>
     </html>
   );

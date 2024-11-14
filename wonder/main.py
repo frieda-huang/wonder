@@ -78,7 +78,7 @@ def main():
         - aspirations: a string describing the user’s career goals or ideal job role.
 
     Example:
-    {
+    {{
         "message": "File and data processed successfully",
         "filename": "resume.pdf",
         "location": "San Francisco",
@@ -90,7 +90,7 @@ def main():
         "aspirations": "I’m looking for an AI engineer role at a San Francisco startup 
                         focused on large language models, machine learning, RAG, and Python.",
         "base64_data": "RESUME DATA"
-    }
+    }}
 
     Instructions:
         1.	Use the pdf_reader tool to parse the "base64_data" field for the resume.

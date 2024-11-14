@@ -12,6 +12,7 @@ python-dotenv = "^1.0.1"
 loguru = "^0.7.2"
 pyautogui = "^0.9.54"
 pillow = "^11.0.0"
+fastapi = {extras = ["standard"], version = "^0.115.5"}
 
 
 [build-system]

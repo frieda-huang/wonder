@@ -30,7 +30,7 @@ export function Job({
   navCollapsedSize,
 }: JobProps) {
   const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
-  const [job] = useJob();
+  const { selectedJobId } = useJob(jobs);
 
   return (
     <ResizablePanelGroup
@@ -74,7 +74,7 @@ export function Job({
       <ResizableHandle withHandle />
       <ResizablePanel defaultSize={defaultLayout[2]} minSize={30}>
         <JobDisplay
-          job={jobs.find((item) => item.id === job.selected) || null}
+          job={jobs.find((item) => item.id === selectedJobId) || null}
         />
       </ResizablePanel>
     </ResizablePanelGroup>

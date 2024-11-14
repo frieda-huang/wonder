@@ -13,7 +13,7 @@ interface JobListProps {
 }
 
 export function JobList({ items }: JobListProps) {
-  const [job, setJob] = useJob();
+  const { selectedJobId, setSelectedJobId } = useJob(items);
 
   return (
     <ScrollArea className="h-screen">
@@ -23,14 +23,9 @@ export function JobList({ items }: JobListProps) {
             key={item.id}
             className={cn(
               "flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-xl transition-all hover:bg-accent",
-              job.selected === item.id && "bg-muted",
+              selectedJobId === item.id && "bg-muted",
             )}
-            onClick={() =>
-              setJob({
-                ...job,
-                selected: item.id,
-              })
-            }
+            onClick={() => setSelectedJobId(item.id)}
           >
             <div className="flex w-full flex-col gap-1">
               <div className="flex items-center">

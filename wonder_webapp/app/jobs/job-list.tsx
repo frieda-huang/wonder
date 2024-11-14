@@ -14,6 +14,7 @@ interface JobListProps {
 
 export function JobList({ items }: JobListProps) {
   const { selectedJobId, setSelectedJobId } = useJob(items);
+  const maxLocationLength = 50;
 
   return (
     <ScrollArea className="h-screen">
@@ -50,7 +51,9 @@ export function JobList({ items }: JobListProps) {
 
             <div className="flex w-full mt-5 items-center text-sm text-orange-500">
               <MapPin className="h-4 w-4 mr-1" />
-              {item.location}
+              {item.location.length > maxLocationLength
+                ? `${item.location.substring(0, maxLocationLength)}...`
+                : item.location}
             </div>
           </button>
         ))}

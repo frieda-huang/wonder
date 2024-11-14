@@ -114,6 +114,7 @@ def create_instruction(user_preferences: dict, number_of_jobs_to_search: int) ->
     Please output **only** the job results in the following JSON array format. Do not add any additional text, explanations, or comments:
     [
         {{
+            "id": "Unique identifier for the job",
             "location": "City or region where the job is located",
             "role_name": "Title of the job role",
             "company_name": "Name of the hiring company",

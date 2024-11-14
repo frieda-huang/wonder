@@ -1,5 +1,6 @@
 import asyncio
 import os
+import pprint
 from dataclasses import dataclass
 
 from anthropic import APIResponse
@@ -7,7 +8,6 @@ from anthropic.types.beta import BetaContentBlockParam, BetaMessage, BetaMessage
 from computer_use_demo.loop import sampling_loop
 from computer_use_demo.tools import ToolResult
 from dotenv import load_dotenv
-from loguru import logger
 
 load_dotenv()
 
@@ -26,15 +26,18 @@ DEFAULT_CONFIG = Config()
 
 
 def output_callback(content_block: BetaContentBlockParam):
-    logger.debug(content_block)
+    pprint.pprint(content_block)
 
 
 def tool_output_callback(result: ToolResult, tool_id: str):
-    print(result, tool_id)
+    if result.base64_image:
+        return
+    else:
+        pprint.pprint(result)
 
 
 def api_response_callback(response: APIResponse[BetaMessage]):
-    logger.debug(response)
+    pprint.pprint(response)
 
 
 async def run_claude(instruction: str, config: Config) -> None:
@@ -60,7 +63,40 @@ async def run_claude(instruction: str, config: Config) -> None:
 
 
 def main():
-    instruction = "Find top colleges in Boston."
+    NUMBER_OF_JOBS = 10
+    instruction = f"""
+    You have a user’s job search preferences for a tech position. The preferences contain:
+        - location: a string specifying the city or region.
+        - resume: a PDF document encoded in base64, under "base64_data", representing the user’s experience and skills.
+        - role type: a list of strings indicating preferred roles, which include:
+            - AI & Machine Learning
+            - Full Stack
+            - Backend
+            - Frontend
+            - Data Science
+            - System & Infrastructure
+        - aspirations: a string describing the user’s career goals or ideal job role.
+
+    Example:
+    {
+        "message": "File and data processed successfully",
+        "filename": "resume.pdf",
+        "location": "San Francisco",
+        "role_type": [
+            "AI & Machine Learning",
+            "Full Stack",
+            "System & Infrastructure"
+        ],
+        "aspirations": "I’m looking for an AI engineer role at a San Francisco startup 
+                        focused on large language models, machine learning, RAG, and Python.",
+        "base64_data": "RESUME DATA"
+    }
+
+    Instructions:
+        1.	Use the pdf_reader tool to parse the "base64_data" field for the resume.
+        2.	Analyze the resume content alongside the user’s preferences (location, roleType, and aspirations) to understand their experience and goals.
+        3.	Based on this analysis, find the top {NUMBER_OF_JOBS} job listings that best match all specified preferences.
+    """
     asyncio.run(run_claude(instruction, DEFAULT_CONFIG))
 
 

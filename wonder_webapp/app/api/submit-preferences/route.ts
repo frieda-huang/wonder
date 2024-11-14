@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const requestedData = await request.json();
-    const res = await fetch("http://localhost:8000/preferences", {
+    const formData = await request.formData();
+    const res = await fetch("http://localhost:8000/submit-preferences", {
       method: "POST",
-      body: JSON.stringify(requestedData),
+      body: formData,
     });
     const data = await res.json();
     return NextResponse.json(data);

@@ -100,17 +100,28 @@ export default function Page() {
     defaultValues,
   });
 
-  async function sendDataToApi(data: AccountFormValues) {
+  async function sendDataToApi(formData: FormData) {
     const response = await fetch("/api/submit-preferences", {
       method: "POST",
-      body: JSON.stringify(data),
+      body: formData,
     });
     if (!response.ok) throw new Error("Failed to submit data");
-    return response.json();
+    return await response.json();
   }
 
   async function onSubmit(data: AccountFormValues) {
-    const formData = {
+    const formData = new FormData();
+
+    formData.append("location", data.location);
+    formData.append("resume", data.resume);
+
+    data.roles.forEach((role) => {
+      formData.append("role_type", role);
+    });
+
+    formData.append("aspirations", data.aspirations);
+
+    const jsonData = {
       ...data,
       resume: data.resume && {
         name: data.resume.name,
@@ -127,13 +138,13 @@ export default function Page() {
     };
 
     try {
-      await sendDataToApi(data);
+      await sendDataToApi(formData);
       toast({
         title: "You submitted the following values:",
         description: (
           <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
             <code className="text-white">
-              {JSON.stringify(formData, null, 2)}
+              {JSON.stringify(jsonData, null, 2)}
             </code>
           </pre>
         ),

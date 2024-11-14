@@ -1,5 +1,11 @@
 import { Separator } from "@/components/ui/separator";
-import { ExternalLink, Map, Shield, TrendingUp } from "lucide-react";
+import {
+  ExternalLink,
+  Map,
+  Shield,
+  TrendingUp,
+  LayoutGrid,
+} from "lucide-react";
 import { Job } from "./data";
 
 import { Badge } from "@/components/ui/badge";
@@ -56,10 +62,13 @@ export function JobDisplay({ job }: JobDisplayProps) {
 
       {/* Categories */}
       <div>
-        <h4 className="text-sm font-semibold text-gray-700 mb-2">Categories</h4>
+        <div className="flex items-center space-x-2 text-gray-700 mb-2">
+          <LayoutGrid className="h-5 w-5 text-gray-500" />
+          <h4 className="text-sm font-semibold">Categories</h4>
+        </div>
         <div className="flex flex-wrap gap-2">
           {job?.categories.map((category, index) => (
-            <Badge key={index} variant="secondary" className="text-xs">
+            <Badge key={index} variant="secondary" className="text-xs mt-2">
               {category}
             </Badge>
           ))}
@@ -68,7 +77,7 @@ export function JobDisplay({ job }: JobDisplayProps) {
 
       {/* Experience Level */}
       <div>
-        <div className="flex items-center space-x-2 text-gray-700">
+        <div className="flex items-center space-x-2 text-gray-700 mb-2">
           <TrendingUp className="h-5 w-5 text-green-500" />
           <h4 className="text-sm font-semibold">Experience Level</h4>
         </div>
@@ -85,7 +94,7 @@ export function JobDisplay({ job }: JobDisplayProps) {
         </div>
         <div className="flex flex-wrap gap-2">
           {job?.required_skills.map((skill, index) => (
-            <Badge key={index} variant="outline" className="text-xs">
+            <Badge key={index} variant="outline" className="text-xs mt-2">
               {skill}
             </Badge>
           ))}
@@ -93,9 +102,12 @@ export function JobDisplay({ job }: JobDisplayProps) {
       </div>
 
       {/* Location */}
-      <div className="flex items-center text-sm text-gray-600 space-x-2">
-        <Map className="h-5 w-5 text-gray-500" />
-        <span className="font-semibold">{job?.location}</span>
+      <div>
+        <div className="flex items-center space-x-2 text-gray-700 mb-2">
+          <Map className="h-5 w-5 text-gray-500" />
+          <h4 className="text-sm font-semibold">Locations</h4>
+        </div>
+        <span className="text-sm mt-2 text-orange-500">{job?.location}</span>
       </div>
     </div>
   );

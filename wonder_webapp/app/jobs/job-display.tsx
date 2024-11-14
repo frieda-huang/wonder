@@ -31,6 +31,10 @@ export function Link({ link, label, type }: LinkProps) {
 }
 
 export function JobDisplay({ job }: JobDisplayProps) {
+  if (!job) {
+    return <div>No job selected. Please select a job to view details.</div>;
+  }
+
   return (
     <div className="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-lg space-y-6">
       {/* Job Header */}
@@ -44,8 +48,8 @@ export function JobDisplay({ job }: JobDisplayProps) {
 
       {/* Links */}
       <div className="flex gap-4 mt-4">
-        <Link link={job!.link_to_website} label="Website" type="default" />
-        <Link link={job!.link_to_job} label="Go to job" type="outline" />
+        <Link link={job?.link_to_website} label="Website" type="default" />
+        <Link link={job?.link_to_job} label="Go to job" type="outline" />
       </div>
 
       <Separator />

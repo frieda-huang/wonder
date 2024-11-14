@@ -109,7 +109,7 @@ def create_instruction(user_preferences: dict, number_of_jobs_to_search: int) ->
 
     Instructions:
         1.	Analyze the user’s preferences (location, role_type, and aspirations) to understand their experience and goals.
-        2.	Based on this analysis, find the top {number_of_jobs_to_search} job listings that best match all specified preferences by searching on https://www.workatastartup.com and https://wellfound.com/jobs.
+        2.	Based on this analysis, find the top {number_of_jobs_to_search} job listings that best match all specified preferences by searching on https://www.workatastartup.com.
         
     Please output **only** the job results in the following JSON array format. Do not add any additional text, explanations, or comments:
     [
@@ -121,7 +121,7 @@ def create_instruction(user_preferences: dict, number_of_jobs_to_search: int) ->
             "description": "Brief summary or description of the company",
             "experience_level": "Level of experience required (e.g., Entry, Mid, Senior)",
             "required_skills": ["List", "of", "required", "skills"],
-            "category": ["List", "of", "industries or sectors related to the job (e.g., Enterprise Software, Fintech, Health Tech, Education Tech, E-commerce)"],
+            "categories": ["List", "of", "industries or sectors related to the job (e.g., Enterprise Software, Fintech, Health Tech, Education Tech, E-commerce)"],
             "link_to_website": "Direct link to the company's website",
             "link_to_job": "Direct link to the job posting"
         }},

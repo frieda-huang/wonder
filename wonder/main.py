@@ -11,6 +11,7 @@ from wonder.run_job_search import (
 )
 
 app = FastAPI()
+cached_jobs = None  # In-memory cache for storing the last job list
 
 
 @app.post("/submit-preferences")
@@ -37,9 +38,20 @@ async def submit_preferences(
     json_data = json.loads(data)
     text = json_data["content"][0]["text"]
     jobs = json.loads(extract_json_from_text(text))
+
+    global cached_jobs
+    cached_jobs = jobs  # Cache the job list for later retrieval
+
     return jobs
 
 
 @app.get("/")
 def root():
     return {"status": "success"}
+
+
+@app.get("/get-jobs")
+async def get_jobs():
+    if cached_jobs is None:
+        return {"error": "No jobs found. Please submit preferences first."}
+    return cached_jobs

@@ -33,6 +33,7 @@ import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { filesize } from "filesize";
+import { useRouter } from "next/navigation";
 
 type AccountFormValues = z.infer<typeof preferencesFormSchema>;
 
@@ -99,6 +100,7 @@ export default function Page() {
     resolver: zodResolver(preferencesFormSchema),
     defaultValues,
   });
+  const router = useRouter();
 
   async function sendDataToApi(formData: FormData) {
     const response = await fetch("/api/submit-preferences", {
@@ -155,6 +157,8 @@ export default function Page() {
         description: "There was an issue submitting your data",
       });
     }
+
+    router.push("/jobs");
   }
 
   return (

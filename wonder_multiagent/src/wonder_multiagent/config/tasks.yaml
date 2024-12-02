@@ -1,17 +1,61 @@
-research_task:
+job_finding_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is 2024.
+    Analyze job listings to identify positions that align with the following user preferences:
+      - Role: Software Engineer with a focus on LLM, AI, Agents, and RAG.
+      - Tech Stack: Python, TypeScript, Next.js.
+      - Experience Level: New grad / entry level
+      - Posting Date: Listings posted within the last week (as of {date}).
+      - Current Date: December 2024.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    A JSON array of job listings, each containing:
+      - location: City or region where the job is located
+      - role_name: Title of the job role
+      - company_name: Name of the hiring company
+      - description: Brief summary or description of the company
+      - experience_level: Level of experience required (e.g., Entry, Mid, Senior) 
+      - required_skills: A list of required skills
+      - categories: A list of industries or sectors related to the job (e.g., Enterprise Software, Fintech, Health Tech, Education Tech, E-commerce)
+      - link_to_website: Direct link to the company's website
+      - link_to_job: Direct link to the job posting
+  agent: job_finder
 
-reporting_task:
+resume_reading_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Evaluate the user’s resume {resume} to extract key details
   expected_output: >
-    A fully fledge reports with the mains topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A JSON object with the extracted information, including:
+      - Contact information
+      - Professional summary
+      - Work experience
+      - Education
+      -	Skills
+      - Projects
+  agent: resume_reader
+
+job_matching_task:
+  description: >
+    Compare the extracted resume details {resume_details} with the identified job listings {job_listings} to assess compatibility based on:
+      - Alignment of required and possessed skills
+      - Correspondence between job responsibilities and past experiences
+      - Suitability of experience level
+      - Relevance of educational background
+  expected_output: >
+    A JSON array of matched job listings, each including:
+      - job_listing: Original job listing details.
+      - match_score: Numerical score (0-100) indicating the degree of match.
+      - match_criteria: Explanation of how the candidate’s profile aligns with the job requirements.
+  agent: matcher
+
+job_quality_control_task:
+  description: >
+    Review the matched job listings {matched_job_listings} to ensure they meet quality standards by verifying:
+      - Accuracy of job details
+      - Relevance to user preferences
+      - Absence of duplicates
+      - Validity of links
+  expected_output: >
+    A JSON array of validated job listings, each containing:
+      - job_listing: Original job listing details
+      - validation_status: Boolean indicating if the listing passed quality checks
+      - validation_notes: Comments on any issues or confirmations of quality
+  agent: quality_control_specialist

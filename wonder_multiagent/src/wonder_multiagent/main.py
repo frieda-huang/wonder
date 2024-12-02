@@ -21,14 +21,17 @@ user_preferences = {
     ),
 }
 
-resume = ""
+filepath_to_resume = "./tools/resume.jpeg"
 
 
 def run():
     """
     Run the crew.
     """
-    inputs = {"user_preferences": user_preferences, "resume": resume}
+    inputs = {
+        "user_preferences": user_preferences,
+        "filepath_to_resume": filepath_to_resume,
+    }
     WonderMultiagent().crew().kickoff(inputs=inputs)
 
 
@@ -36,7 +39,10 @@ def train():
     """
     Train the crew for a given number of iterations.
     """
-    inputs = {"user_preferences": user_preferences, "resume": resume}
+    inputs = {
+        "user_preferences": user_preferences,
+        "filepath_to_resume": filepath_to_resume,
+    }
     try:
         WonderMultiagent().crew().train(
             n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs

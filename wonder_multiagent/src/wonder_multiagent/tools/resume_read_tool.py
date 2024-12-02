@@ -14,7 +14,5 @@ class ResumeReadTool(BaseTool):
     description: str = "Parse resume and extract key details about a job seeker"
     args_schema: type[BaseModel] = ResumeReadToolInput
 
-    def _run(self):
-        return claude_vision(
-            filepath=self.args_schema.model_fields["filepath_to_resume"]
-        )
+    def _run(self, filepath_to_resume: str):
+        return claude_vision(filepath=filepath_to_resume)

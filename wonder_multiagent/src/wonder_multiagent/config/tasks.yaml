@@ -26,9 +26,9 @@ resume_reading_task:
     A JSON object with the extracted information, including:
       - Contact information
       - Professional summary
-      - Work experience
       - Education
       -	Skills
+      - Work experience
       - Projects
   agent: resume_reader
 

@@ -1,66 +1,81 @@
 from crewai import Agent, Crew, Process, Task
-from crewai.project import CrewBase, agent, crew, task, before_kickoff, after_kickoff
+from crewai.project import CrewBase, agent, crew, task
+from crewai_tools import EXASearchTool
+from wonder_multiagent.tools.job_evaluation_tool import JobEvaluationTool
+from wonder_multiagent.tools.job_match_tool import JobMatchTool
+from wonder_multiagent.tools.resume_read_tool import ResumeReadTool
 
-# Uncomment the following line to use an example of a custom tool
-# from wonder_multiagent.tools.custom_tool import MyCustomTool
+# Instantiate tools
+exa_search_tool = EXASearchTool()
+resume_read_tool = ResumeReadTool()
+job_match_tool = JobMatchTool()
+job_evaluation_tool = JobEvaluationTool()
 
-# Check our tools documentations for more information on how to use them
-# from crewai_tools import SerperDevTool
 
 @CrewBase
-class WonderMultiagent():
-	"""WonderMultiagent crew"""
+class WonderMultiagent:
+    """WonderMultiagent crew"""
 
-	agents_config = 'config/agents.yaml'
-	tasks_config = 'config/tasks.yaml'
+    agents_config = "config/agents.yaml"
+    tasks_config = "config/tasks.yaml"
 
-	@before_kickoff # Optional hook to be executed before the crew starts
-	def pull_data_example(self, inputs):
-		# Example of pulling data from an external API, dynamically changing the inputs
-		inputs['extra_data'] = "This is extra data"
-		return inputs
+    # Create agents
+    @agent
+    def job_finder(self) -> Agent:
+        return Agent(
+            config=self.agents_config["job_finder"],
+            tools=[exa_search_tool],
+            verbose=True,
+        )
 
-	@after_kickoff # Optional hook to be executed after the crew has finished
-	def log_results(self, output):
-		# Example of logging results, dynamically changing the output
-		print(f"Results: {output}")
-		return output
+    @agent
+    def resume_reader(self) -> Agent:
+        return Agent(
+            config=self.agents_config["resume_reader"],
+            tools=[resume_read_tool],
+            verbose=True,
+        )
 
-	@agent
-	def researcher(self) -> Agent:
-		return Agent(
-			config=self.agents_config['researcher'],
-			# tools=[MyCustomTool()], # Example of custom tool, loaded on the beginning of file
-			verbose=True
-		)
+    @agent
+    def matcher(self) -> Agent:
+        return Agent(
+            config=self.agents_config["job_matcher"],
+            tools=[job_match_tool],
+            verbose=True,
+        )
 
-	@agent
-	def reporting_analyst(self) -> Agent:
-		return Agent(
-			config=self.agents_config['reporting_analyst'],
-			verbose=True
-		)
+    @agent
+    def quality_control_specialist(self) -> Agent:
+        return Agent(
+            config=self.agents_config["quality_control_specialist"],
+            tools=[job_evaluation_tool],
+            verbose=True,
+        )
 
-	@task
-	def research_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['research_task'],
-		)
+    # Define tasks
+    @task
+    def job_finding_task(self) -> Task:
+        return Task(config=self.tasks_config["job_finding_task"])
 
-	@task
-	def reporting_task(self) -> Task:
-		return Task(
-			config=self.tasks_config['reporting_task'],
-			output_file='report.md'
-		)
+    @task
+    def resume_reading_task(self) -> Task:
+        return Task(config=self.tasks_config["resume_reading_task"])
 
-	@crew
-	def crew(self) -> Crew:
-		"""Creates the WonderMultiagent crew"""
-		return Crew(
-			agents=self.agents, # Automatically created by the @agent decorator
-			tasks=self.tasks, # Automatically created by the @task decorator
-			process=Process.sequential,
-			verbose=True,
-			# process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
-		)
+    @task
+    def job_matching_task(self) -> Task:
+        return Task(config=self.tasks_config["job_matching_task"])
+
+    @task
+    def job_quality_control_task(self) -> Task:
+        return Task(config=self.tasks_config["job_quality_control_task"])
+
+    @crew
+    def crew(self) -> Crew:
+        """Creates the WonderMultiagent crew"""
+        return Crew(
+            agents=self.agents,  # Automatically created by the @agent decorator
+            tasks=self.tasks,  # Automatically created by the @task decorator
+            process=Process.sequential,
+            verbose=True,
+            # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
+        )

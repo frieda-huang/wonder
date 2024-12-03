@@ -1,6 +1,8 @@
 #!/usr/bin/env python
+import json
 import sys
 import warnings
+from datetime import datetime
 
 from wonder_multiagent.crew import WonderMultiagent
 
@@ -22,6 +24,7 @@ user_preferences = {
 }
 
 filepath_to_resume = "./tools/resume.jpeg"
+date = datetime.today().strftime("%Y-%m-%d")
 
 
 def run():
@@ -30,9 +33,14 @@ def run():
     """
     inputs = {
         "user_preferences": user_preferences,
+        "date": date,
+        "num_jobs": 5,
         "filepath_to_resume": filepath_to_resume,
     }
-    WonderMultiagent().crew().kickoff(inputs=inputs)
+    crew_output = WonderMultiagent().crew().kickoff(inputs=inputs)
+    if crew_output.json_dict:
+        print(f"JSON Output: {json.dumps(crew_output.json_dict, indent=2)}")
+    print(f"Token Usage: {crew_output.token_usage}")
 
 
 def train():

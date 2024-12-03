@@ -6,7 +6,7 @@ from wonder_multiagent.tools.job_match_tool import JobMatchTool
 from wonder_multiagent.tools.resume_read_tool import ResumeReadTool
 
 # Instantiate tools
-exa_search_tool = EXASearchTool()
+exa_search_tool = EXASearchTool(n_results=5)
 resume_read_tool = ResumeReadTool()
 job_match_tool = JobMatchTool()
 job_evaluation_tool = JobEvaluationTool()

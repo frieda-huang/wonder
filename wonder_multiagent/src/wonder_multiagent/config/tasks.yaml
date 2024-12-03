@@ -33,7 +33,7 @@ resume_reading_task:
 
 job_matching_task:
   description: >
-    Compare the extracted resume details {resume_details} with the identified job listings {job_listings} to assess compatibility based on:
+    Compare the extracted resume details with the identified job listings to assess compatibility based on:
       - Alignment of required and possessed skills
       - Correspondence between job responsibilities and past experiences
       - Suitability of experience level
@@ -47,7 +47,7 @@ job_matching_task:
 
 job_quality_control_task:
   description: >
-    Review the matched job listings {matched_job_listings} to ensure they meet quality standards by verifying:
+    Review the matched job listings to ensure they meet quality standards by verifying:
       - Accuracy of job details
       - Relevance to user preferences
       - Absence of duplicates

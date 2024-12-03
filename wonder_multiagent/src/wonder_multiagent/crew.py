@@ -1,15 +1,11 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import EXASearchTool
-from wonder_multiagent.tools.job_evaluation_tool import JobEvaluationTool
-from wonder_multiagent.tools.job_match_tool import JobMatchTool
 from wonder_multiagent.tools.resume_read_tool import ResumeReadTool
 
 # Instantiate tools
-exa_search_tool = EXASearchTool(n_results=5)
+exa_search_tool = EXASearchTool(n_results=1)
 resume_read_tool = ResumeReadTool()
-job_match_tool = JobMatchTool()
-job_evaluation_tool = JobEvaluationTool()
 
 
 @CrewBase
@@ -39,8 +35,7 @@ class WonderMultiagent:
     @agent
     def matcher(self) -> Agent:
         return Agent(
-            config=self.agents_config["job_matcher"],
-            tools=[job_match_tool],
+            config=self.agents_config["matcher"],
             verbose=True,
         )
 
@@ -48,7 +43,6 @@ class WonderMultiagent:
     def quality_control_specialist(self) -> Agent:
         return Agent(
             config=self.agents_config["quality_control_specialist"],
-            tools=[job_evaluation_tool],
             verbose=True,
         )
 

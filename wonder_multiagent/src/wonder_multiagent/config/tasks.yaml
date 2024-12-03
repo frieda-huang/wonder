@@ -20,7 +20,7 @@ job_finding_task:
 
 resume_reading_task:
   description: >
-    Evaluate the user’s resume {resume} to extract key details
+    Access the user’s resume located at {filepath_to_resume} and analyze it to extract key details.
   expected_output: >
     A JSON object with the extracted information, including:
       - Contact information

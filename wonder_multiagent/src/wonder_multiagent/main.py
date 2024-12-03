@@ -3,6 +3,7 @@ import json
 import sys
 import warnings
 from datetime import datetime
+from pathlib import Path
 
 from wonder_multiagent.crew import WonderMultiagent
 
@@ -23,7 +24,7 @@ user_preferences = {
     ),
 }
 
-filepath_to_resume = "./tools/resume.jpeg"
+filepath_to_resume = str(Path(__file__).parent / "tools" / "resume.jpeg")
 date = datetime.today().strftime("%Y-%m-%d")
 
 
@@ -34,7 +35,7 @@ def run():
     inputs = {
         "user_preferences": user_preferences,
         "date": date,
-        "num_jobs": 5,
+        "num_jobs": 1,
         "filepath_to_resume": filepath_to_resume,
     }
     crew_output = WonderMultiagent().crew().kickoff(inputs=inputs)

@@ -1,0 +1,4 @@
+2024-12-03 17:11:06,849 - WARNING - The 'tags' parameter is deprecated. Use 'default_tags' instead
+2024-12-03 17:11:07,835 - INFO - Session Replay: https://app.agentops.ai/drilldown?session_id=2440ffc0-9d98-4929-8ec0-d00d7a2d0233
+2024-12-03 17:14:17,674 - INFO - Session Stats - Duration: 3m 8.6s | Cost: $0.154158 | LLMs: 15 | Tools: 9 | Actions: 0 | Errors: 0
+2024-12-03 17:14:17,675 - INFO - Session Replay: https://app.agentops.ai/drilldown?session_id=2440ffc0-9d98-4929-8ec0-d00d7a2d0233

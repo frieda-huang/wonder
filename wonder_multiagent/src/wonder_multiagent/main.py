@@ -1,13 +1,18 @@
 #!/usr/bin/env python
 import json
+import os
 import sys
 import warnings
 from datetime import datetime
 from pathlib import Path
 
+import agentops
 from wonder_multiagent.crew import WonderMultiagent
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
+
+agentops.init(api_key=os.environ["AGENTOPS_API_KEY"], default_tags=["job-search"])
+
 
 # This main file is intended to be a way for you to run your
 # crew locally, so refrain from adding unnecessary logic into this file.
@@ -35,7 +40,7 @@ def run():
     inputs = {
         "user_preferences": user_preferences,
         "date": date,
-        "num_jobs": 1,
+        "num_jobs": 2,
         "filepath_to_resume": filepath_to_resume,
     }
     crew_output = WonderMultiagent().crew().kickoff(inputs=inputs)

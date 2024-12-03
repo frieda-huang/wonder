@@ -51,10 +51,11 @@ job_quality_control_task:
       - Accuracy of job details
       - Relevance to user preferences
       - Absence of duplicates
-      - Validity of links
+      - Validity of links: this is VERY IMPORTANT
   expected_output: >
     A JSON array of validated job listings, each containing:
       - job_listing: Original job listing details
       - validation_status: Boolean indicating if the listing passed quality checks
       - validation_notes: Comments on any issues or confirmations of quality
   agent: quality_control_specialist
+  output_file: jobs.md

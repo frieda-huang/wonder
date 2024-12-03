@@ -4,7 +4,7 @@ from crewai_tools import EXASearchTool
 from wonder_multiagent.tools.resume_read_tool import ResumeReadTool
 
 # Instantiate tools
-exa_search_tool = EXASearchTool(n_results=1)
+exa_search_tool = EXASearchTool(n_results=10)
 resume_read_tool = ResumeReadTool()
 
 
@@ -78,4 +78,5 @@ class WonderMultiagent:
             tasks=self.tasks,  # Automatically created by the @task decorator
             process=Process.sequential,
             verbose=True,
+            memory=True,
         )

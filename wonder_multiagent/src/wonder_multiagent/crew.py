@@ -57,11 +57,18 @@ class WonderMultiagent:
 
     @task
     def job_matching_task(self) -> Task:
-        return Task(config=self.tasks_config["job_matching_task"])
+        return Task(
+            config=self.tasks_config["job_matching_task"],
+            context=[self.resume_reading_task(), self.job_finding_task()],
+        )
 
     @task
     def job_quality_control_task(self) -> Task:
-        return Task(config=self.tasks_config["job_quality_control_task"])
+        return Task(
+            config=self.tasks_config["job_quality_control_task"],
+            context=[self.job_matching_task()],
+            output_file="output/jobs.md",
+        )
 
     @crew
     def crew(self) -> Crew:
@@ -71,5 +78,4 @@ class WonderMultiagent:
             tasks=self.tasks,  # Automatically created by the @task decorator
             process=Process.sequential,
             verbose=True,
-            # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
         )

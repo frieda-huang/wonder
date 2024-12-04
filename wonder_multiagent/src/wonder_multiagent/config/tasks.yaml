@@ -9,7 +9,7 @@ job_finding_task:
     A JSON array of job listings, each containing:
       - location: City or region where the job is located
       - role_name: Title of the job role
-      - company_name: Name of the hiring company
+      - company_name: Name of the hiring company. If it's a bunch of jobs from a website, use "Jobs from <website_name>" instead
       - description: Brief summary or description of the company
       - experience_level: Level of experience required (e.g., Entry, Mid, Senior) 
       - required_skills: A list of required skills

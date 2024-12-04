@@ -2,10 +2,12 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import EXASearchTool
 from wonder_multiagent.tools.resume_read_tool import ResumeReadTool
+from wonder_multiagent.tools.url_validator_tool import URLValidatorTool
 
 # Instantiate tools
 exa_search_tool = EXASearchTool(n_results=10)
 resume_read_tool = ResumeReadTool()
+url_validator_tool = URLValidatorTool()
 
 
 @CrewBase
@@ -20,7 +22,7 @@ class WonderMultiagent:
     def job_finder(self) -> Agent:
         return Agent(
             config=self.agents_config["job_finder"],
-            tools=[exa_search_tool],
+            tools=[exa_search_tool, url_validator_tool],
             verbose=True,
         )
 
@@ -43,6 +45,7 @@ class WonderMultiagent:
     def quality_control_specialist(self) -> Agent:
         return Agent(
             config=self.agents_config["quality_control_specialist"],
+            tools=[url_validator_tool],
             verbose=True,
         )
 

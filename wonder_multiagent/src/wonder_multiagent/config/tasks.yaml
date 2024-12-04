@@ -16,6 +16,9 @@ job_finding_task:
       - categories: A list of industries or sectors related to the job (e.g., Enterprise Software, Fintech, Health Tech, Education Tech, E-commerce)
       - link_to_website: Direct link to the company's website
       - link_to_job: Direct link to the job posting
+      - salary_range: The compensation range offered for the position, typically expressed in annual terms (e.g., $120,000 - $160,000)
+      - work_arrangement: The working setup for the role, specifying whether it’s Onsite (at the company’s location), Hybrid (a mix of remote and onsite), or Remote (work from anywhere)
+      - visa_sponsorship: Specifies whether the employer is willing to assist candidates who require legal authorization to work in the country (e.g., H-1B, O-1)
   agent: job_finder
 
 resume_reading_task:
@@ -40,7 +43,7 @@ job_matching_task:
       - Relevance of educational background
   expected_output: >
     A JSON array of matched job listings, each including:
-      - job_listing: Original job listing details.
+      - job_listing: Original job listing details including "location", "role_name", "company_name", "description", "experience_level", "required_skills", "categories", "link_to_website", "link_to_job", "salary_range", "work_arrangement", and "visa_sponsorship"
       - match_score: Numerical score (0-100) indicating the degree of match.
       - match_criteria: Explanation of how the candidate’s profile aligns with the job requirements.
   agent: matcher

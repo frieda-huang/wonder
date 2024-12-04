@@ -79,4 +79,5 @@ class WonderMultiagent:
             process=Process.sequential,
             verbose=True,
             memory=True,
+            memory_config={"provider": "mem0", "config": {"user_id": "friedahuang"}},
         )

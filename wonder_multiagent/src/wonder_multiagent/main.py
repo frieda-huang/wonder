@@ -8,10 +8,11 @@ from pathlib import Path
 
 import agentops
 from wonder_multiagent.crew import WonderMultiagent
+from wonder_multiagent.memory import client
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 
-agentops.init(api_key=os.environ["AGENTOPS_API_KEY"], default_tags=["job-search"])
+agentops.init(api_key=os.getenv("AGENTOPS_API_KEY"), default_tags=["job-search"])
 
 
 # This main file is intended to be a way for you to run your
@@ -40,9 +41,11 @@ def run():
     inputs = {
         "user_preferences": user_preferences,
         "date": date,
-        "num_jobs": 2,
+        "num_jobs": 10,
         "filepath_to_resume": filepath_to_resume,
     }
+    # Add user preferences to long-term memory
+    client.add(json.dumps(user_preferences), user_id="friedahuang")
     crew_output = WonderMultiagent().crew().kickoff(inputs=inputs)
     if crew_output.json_dict:
         print(f"JSON Output: {json.dumps(crew_output.json_dict, indent=2)}")

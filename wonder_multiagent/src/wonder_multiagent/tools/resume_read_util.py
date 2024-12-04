@@ -1,9 +1,10 @@
 import base64
+import os
 
 from anthropic import Anthropic
 
-client = Anthropic()
-MODEL_NAME = "claude-3-opus-20240229"
+client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+MODEL_NAME = "claude-3-5-sonnet-20241022"
 
 resume_read_tool = {
     "name": "resume_parser",

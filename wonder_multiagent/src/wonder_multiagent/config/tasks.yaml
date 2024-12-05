@@ -1,10 +1,7 @@
 job_finding_task:
   description: >
     Analyze job listings to identify positions that align with the following user preferences:
-      - Role: Software Engineer with a focus on LLM, AI, Agents, and RAG.
-      - Tech Stack: Python, TypeScript, Next.js.
-      - Experience Level: New grad / entry level
-      - Posting Date: Listings posted within the last week (as of {date}).
+      {user_preferences}
   expected_output: >
     A JSON array of job listings, each containing:
       - location: City or region where the job is located

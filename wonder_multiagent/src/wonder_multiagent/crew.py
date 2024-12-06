@@ -22,7 +22,7 @@ class WonderMultiagent:
     def job_finder(self) -> Agent:
         return Agent(
             config=self.agents_config["job_finder"],
-            tools=[exa_search_tool, url_validator_tool],
+            tools=[exa_search_tool],
             verbose=True,
         )
 

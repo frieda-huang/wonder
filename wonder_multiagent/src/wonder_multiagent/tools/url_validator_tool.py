@@ -10,11 +10,16 @@ class URLValidatorToolInput(BaseModel):
 
 
 class URLValidatorTool(BaseTool):
-    """Detect any of broken links"""
+    name: str = "URL Validator Tool"
+    description: str = "Detect any broken links on job listings"
+    args_schema: type[BaseModel] = URLValidatorToolInput
 
-    def _run(self, url: str) -> bool:
+    def _run(self, url: str) -> str:
         try:
-            result = requests.get(url, timeout=1)
-            return result.status_code == 200
-        except (requests.ConnectionError, requests.Timeout, requests.RequestException):
-            return False
+            result = requests.get(url, timeout=3, allow_redirects=True)
+            if result.status_code == 200:
+                return f"URL is valid (status: 200)"
+            else:
+                return f"URL potentially invalid (status: {result.status_code})"
+        except Exception as e:
+            return f"URL invalid (error: {str(e)})"

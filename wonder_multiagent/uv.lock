@@ -809,6 +809,20 @@ wheels = [
 ]
 
 [[package]]
+name = "exa-py"
+version = "1.7.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "openai" },
+    { name = "requests" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d6/19/8819f1e8eafcb0a95b9f21bd8bd37c6939df3a9674886eb133a33fd4ae1e/exa_py-1.7.0.tar.gz", hash = "sha256:8f8a11c537092880608565ec69764f263eb3ddbc124ce9ced48b4d9b76a652c0", size = 10763 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2d/78/b38d4beac13acc68058585262f732654b043172c075215ccb4b188178d96/exa_py-1.7.0-py3-none-any.whl", hash = "sha256:01973b4bd1c1d7e7144a4ffd6b8017c6e7674d123bab828c08b48ca41c5dd5ea", size = 10109 },
+]
+
+[[package]]
 name = "exceptiongroup"
 version = "1.2.2"
 source = { registry = "https://pypi.org/simple" }
@@ -4322,6 +4336,7 @@ source = { editable = "." }
 dependencies = [
     { name = "anthropic" },
     { name = "crewai", extra = ["agentops", "tools"] },
+    { name = "exa-py" },
     { name = "mem0ai" },
     { name = "ruff" },
 ]
@@ -4330,6 +4345,7 @@ dependencies = [
 requires-dist = [
     { name = "anthropic", specifier = ">=0.40.0" },
     { name = "crewai", extras = ["agentops", "tools"], specifier = ">=0.83.0,<1.0.0" },
+    { name = "exa-py", specifier = ">=1.7.0" },
     { name = "mem0ai", specifier = ">=0.1.34" },
     { name = "ruff", specifier = ">=0.8.1" },
 ]

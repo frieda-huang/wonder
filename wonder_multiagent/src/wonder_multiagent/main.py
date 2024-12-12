@@ -3,7 +3,7 @@ import json
 import os
 import sys
 import warnings
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import agentops
@@ -31,7 +31,12 @@ user_preferences = {
 }
 
 filepath_to_resume = str(Path(__file__).parent / "tools" / "resume.jpeg")
-date = datetime.today().strftime("%Y-%m-%d")
+
+
+def get_n_days_ago(n_days: int) -> str:
+    today = datetime.now()
+    n_days_ago = today - timedelta(days=n_days)
+    return n_days_ago.strftime("%Y-%m-%d")
 
 
 def run():
@@ -40,9 +45,10 @@ def run():
     """
     inputs = {
         "user_preferences": user_preferences,
-        "date": date,
-        "num_jobs": 10,
+        "date": get_n_days_ago(n_days=0),
+        "num_jobs": 20,
         "filepath_to_resume": filepath_to_resume,
+        "start_crawl_date": get_n_days_ago(n_days=3),
     }
     # Add user preferences to long-term memory
     client.add(json.dumps(user_preferences), user_id="friedahuang")

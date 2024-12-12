@@ -1,11 +1,11 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-from crewai_tools import EXASearchTool
+from wonder_multiagent.tools.exa_search_tool import ExaSearchTool
 from wonder_multiagent.tools.resume_read_tool import ResumeReadTool
 from wonder_multiagent.tools.url_validator_tool import URLValidatorTool
 
 # Instantiate tools
-exa_search_tool = EXASearchTool(n_results=10)
+exa_search_tool = ExaSearchTool()
 resume_read_tool = ResumeReadTool()
 url_validator_tool = URLValidatorTool()
 

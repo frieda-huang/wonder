@@ -1,7 +1,9 @@
 job_finding_task:
   description: >
-    Analyze job listings to identify positions that align with the following user preferences:
-      {user_preferences}
+    Analyze job listings to identify positions matching the user preferences below
+    Only include listings posted within the past week
+    User preferences: {user_preferences}
+    Current date: {date}
   expected_output: >
     A JSON array of job listings, each containing:
       - location: City or region where the job is located

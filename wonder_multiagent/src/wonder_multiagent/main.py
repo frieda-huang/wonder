@@ -50,7 +50,7 @@ def run():
     inputs = {
         "user_preferences": user_preferences,
         "date": current_date,
-        "num_jobs": 20,
+        "num_jobs": 10,
         "filepath_to_resume": filepath_to_resume,
         "start_crawl_date": start_crawl_date,
     }

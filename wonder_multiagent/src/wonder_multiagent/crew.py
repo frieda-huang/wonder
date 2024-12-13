@@ -1,6 +1,6 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
-from crewai_tools import EXASearchTool
+from crewai_tools import EXASearchTool, WebsiteSearchTool
 from wonder_multiagent.tools.resume_read_tool import ResumeReadTool
 from wonder_multiagent.tools.url_validator_tool import URLValidatorTool
 
@@ -8,6 +8,7 @@ from wonder_multiagent.tools.url_validator_tool import URLValidatorTool
 exa_search_tool = EXASearchTool()
 resume_read_tool = ResumeReadTool()
 url_validator_tool = URLValidatorTool()
+website_scrape_tool = WebsiteSearchTool()
 
 
 @CrewBase
@@ -23,6 +24,14 @@ class WonderMultiagent:
         return Agent(
             config=self.agents_config["job_finder"],
             tools=[exa_search_tool],
+            verbose=True,
+        )
+
+    @agent
+    def website_scraper(self) -> Agent:
+        return Agent(
+            config=self.agents_config["website_scraper"],
+            tools=[website_scrape_tool],
             verbose=True,
         )
 
@@ -55,6 +64,13 @@ class WonderMultiagent:
         return Task(config=self.tasks_config["job_finding_task"])
 
     @task
+    def website_scrape_task(self) -> Task:
+        return Task(
+            config=self.tasks_config["website_scrape_task"],
+            context=[self.job_finding_task()],
+        )
+
+    @task
     def resume_reading_task(self) -> Task:
         return Task(config=self.tasks_config["resume_reading_task"])
 
@@ -62,7 +78,7 @@ class WonderMultiagent:
     def job_matching_task(self) -> Task:
         return Task(
             config=self.tasks_config["job_matching_task"],
-            context=[self.resume_reading_task(), self.job_finding_task()],
+            context=[self.resume_reading_task(), self.website_scrape_task()],
         )
 
     @task

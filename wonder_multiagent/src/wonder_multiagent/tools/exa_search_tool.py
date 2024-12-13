@@ -1,7 +1,7 @@
 # Based on Exa API https://docs.exa.ai/reference/search#body-use-autoprompt
 
 import os
-from typing import List, Literal, Optional, TypeAlias
+from typing import List, Optional
 
 from crewai.tools import BaseTool
 from dotenv import load_dotenv
@@ -10,19 +10,12 @@ from pydantic import BaseModel, Field
 
 load_dotenv()
 
-CategoryType: TypeAlias = Literal["company", "tweet"]
-
 
 class ExaSearchToolInput(BaseModel):
     query: str = Field(..., description="The query string")
-    category: CategoryType = Field(..., description="A data category to focus on")
     num_results: int = Field(..., description="Number of search results to return")
     include_domains: List[str] = Field(
-        default=[
-            "https://www.ycombinator.com/jobs",
-            "https://wellfound.com/jobs",
-            "https://x.com/jobs",
-        ],
+        default=["ycombinator.com", "wellfound.com", "x.com"],
         description="List of domains to include in the search. If specified, results will only come from these domains",
     )
     start_crawl_date: str = Field(
@@ -39,7 +32,6 @@ class ExaSearchTool(BaseTool):
     def _run(
         self,
         query: str,
-        category: CategoryType,
         num_results: int,
         start_crawl_date: str,
         include_domains: Optional[List[str]] = None,
@@ -51,20 +43,20 @@ class ExaSearchTool(BaseTool):
         exa = Exa(exa_api_key)
         response = exa.search_and_contents(
             query,
-            type="neural",
+            type="auto",
             use_autoprompt=True,
-            category=category,
             num_results=num_results,
             start_crawl_date=start_crawl_date,
             include_domains=include_domains,
             highlights=True,
         )
 
-        parsedResult = "".join(
+        parsedResult = "\n".join(
             [
-                f"<Title id={idx}>{eachResult.title}</Title>"
-                f"<URL id={idx}>{eachResult.url}</URL>"
-                f'<Highlight id={idx}>{"".join(eachResult.highlights)}</Highlight>'
+                f"<Title id={idx}>{eachResult.title}</Title>\n"
+                f"<Score id={idx}>{eachResult.score}</Score>\n"
+                f"<URL id={idx}>{eachResult.url}</URL>\n"
+                f'<Highlight id={idx}>{"".join(eachResult.highlights)}</Highlight>\n'
                 for (idx, eachResult) in enumerate(response.results)
             ]
         )

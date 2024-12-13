@@ -18,6 +18,8 @@ job_finding_task:
       - salary_range: The compensation range offered for the position, typically expressed in annual terms (e.g., $120,000 - $160,000)
       - work_arrangement: The working setup for the role, specifying whether it’s Onsite (at the company’s location), Hybrid (a mix of remote and onsite), or Remote (work from anywhere)
       - visa_sponsorship: Specifies whether the employer is willing to assist candidates who require legal authorization to work in the country (e.g., H-1B, O-1)
+    
+    If you can't find the relevant info for a field, just use "Not found"
   agent: job_finder
 
 resume_reading_task:

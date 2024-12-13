@@ -39,16 +39,20 @@ def get_n_days_ago(n_days: int) -> str:
     return n_days_ago.strftime("%Y-%m-%d")
 
 
+current_date = get_n_days_ago(n_days=0)
+start_crawl_date = get_n_days_ago(n_days=3)
+
+
 def run():
     """
     Run the crew.
     """
     inputs = {
         "user_preferences": user_preferences,
-        "date": get_n_days_ago(n_days=0),
+        "date": current_date,
         "num_jobs": 20,
         "filepath_to_resume": filepath_to_resume,
-        "start_crawl_date": get_n_days_ago(n_days=3),
+        "start_crawl_date": start_crawl_date,
     }
     # Add user preferences to long-term memory
     client.add(json.dumps(user_preferences), user_id="friedahuang")
@@ -64,7 +68,10 @@ def train():
     """
     inputs = {
         "user_preferences": user_preferences,
+        "date": current_date,
+        "num_jobs": 5,
         "filepath_to_resume": filepath_to_resume,
+        "start_crawl_date": start_crawl_date,
     }
     try:
         WonderMultiagent().crew().train(

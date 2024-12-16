@@ -80,5 +80,6 @@ job_quality_control_task:
       - job_listing: Original job listing details
       - validation_status: Boolean indicating if the listing passed quality checks
       - validation_notes: Comments on any issues or confirmations of quality
+    You must only return JSON array and nothing else.
   agent: quality_control_specialist
   output_file: jobs.md
